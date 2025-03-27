@@ -1,44 +1,44 @@
-import React from 'react';
-import { Icon } from './Icon';  // Ajuste o caminho conforme necessário
+import React from "react";
+import { Icon } from "./Icon";
+import { iconMap } from "../../utils/icons";
+import type { Meta, StoryObj } from "@storybook/react";
 
-export default {
-    title: 'Components/Icon',
+const meta: Meta<typeof Icon> = {
+    title: "Components/Icon",
     component: Icon,
     argTypes: {
         name: {
-            control: 'text',
-            description: 'Nome do ícone para exibir',
+            control: {
+                type: "select",
+                options: Object.keys(iconMap),
+            },
         },
         size: {
-            control: 'number',
-            description: 'Tamanho do ícone'
+            control: { type: "number" },
         },
         color: {
-            control: 'color',
-            description: 'Cor do ícone'
+            control: { type: "color" },
         },
+    },
+    args: {
+        name: "whatsapp",
+        size: 32,
+        color: "#4CAF50",
     },
 };
 
-const Template = (args) => <Icon {...args} />;
+export default meta;
+type Story = StoryObj<typeof Icon>;
 
-export const Default = Template.bind({});
-Default.args = {
-    name: 'whatsapp', // Nome do ícone (deve ser uma chave válida do iconMap)
-    size: 32,         // Tamanho do ícone
-    color: '#4CAF50', // Cor do ícone (pode ser uma cor personalizada)
-};
-
-export const Large = Template.bind({});
-Large.args = {
-    name: 'generalCampaign', // Nome do ícone
-    size: 64,                // Tamanho maior
-    color: '#FF6347',        // Cor do ícone
-};
-
-export const Small = Template.bind({});
-Small.args = {
-    name: 'search',          // Nome do ícone
-    size: 16,                // Tamanho menor
-    color: '#0000FF',        // Cor do ícone
+export const AllIcons: Story = {
+    render: () => (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, 100px)", gap: 20 }}>
+            {Object.entries(iconMap).map(([name, IconComponent]) => (
+                <div key={name} style={{ textAlign: "center" }}>
+                    <IconComponent width={32} height={32} style={{ color: "#111" }} />
+                    <div style={{ fontSize: 12, marginTop: 8 }}>{name}</div>
+                </div>
+            ))}
+        </div>
+    ),
 };
